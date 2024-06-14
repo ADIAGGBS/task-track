@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-      <h1 class="text-center mb-4">Daily Task Tracker</h1>
+      <h1 class="text-center mb-4">{{ formattedToday }}</h1>
       
       <div class="input-group mb-4">
         <input
@@ -15,7 +15,7 @@
   
       <div class="mb-4 text-center">
         <small>
-          <span class="badge bg-primary">New</span>
+          <span class="badge list-group-item-primary">New</span>
           <span class="badge bg-warning text-dark">In Progress</span>
           <span class="badge bg-success">Completed</span>
         </small>
@@ -69,7 +69,9 @@
   
   const newTodoText = ref('');
   const todos = ref([]);
-  
+  const today = new Date();
+  const formattedToday = today.toLocaleDateString('en-GB').replaceAll("/","-");
+
   const loadTodos = () => {
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
@@ -108,6 +110,7 @@
   
   const getTodoClass = (todo) => {
     if (todo.state === 'New') {
+      console.log(todo);
       return 'list-group-item-primary';
     } else if (todo.state === 'In Progress') {
       return 'list-group-item-warning';
@@ -143,22 +146,23 @@
     border-radius: 0.375rem;
     margin-bottom: 0.5rem;
     padding: 1rem;
+    font-weight: bold;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .list-group-item-primary {
-    background-color: #cce5ff;
-    color: #004085;
+    background-color: #004085 !important;
+    color: #cce5ff !important;
   }
   
   .list-group-item-warning {
-    background-color: #ffeeba;
-    color: #856404;
+    background-color: #ffc107;
+    color: #212529;
   }
   
   .list-group-item-success {
-    background-color:rgb(0, 128, 30)a;
-    color: #00a516;
+    background-color:#198754;
+    color: #f8f8f8;
   }
   
   .btn {
